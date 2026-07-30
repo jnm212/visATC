@@ -2,6 +2,7 @@
 #' @export
 #' @title show the parents of the specified node(s)
 #' @param x a node label e.g. A01AX
+#' @returns character vector
 parents <- function(x) {
   # x is node label(s)
 
@@ -44,7 +45,8 @@ schema <- function(levs) {
 
 #' @export
 #' @title display drug name for ATC codes
-#' @param x vector of ATC codse
+#' @param x vector of ATC codes
+#' @returns character vector of drug names
 drugnames <- function(x) {
   sapply(x, function(codes) {names(grep(paste0("^",codes,"$"), ATCdata, value=T))})
 }

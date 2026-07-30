@@ -352,7 +352,7 @@ setMethod("pruning",
 #removes all branches below this node (i.e. at lower levels of the upside-down tree)
 
 ########################################################################
-# find relatives within a tree, from specified node or lavel
+# find relatives within a tree, from specified node or level
 #
 
 #' @export
