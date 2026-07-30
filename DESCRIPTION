@@ -1,0 +1,15 @@
+Package: newATC
+Type: Package
+Title: Visualise the Anatomical Therapeutic Chemical (ATC) Hierarchy
+Version: 1.0.0
+Authors@R: person("J", "Matthews", email = "jnmatt212@gmail.com",
+  role = c("aut", "cre","cph"))
+Description: Visualisation and subsetting of the World Health Organisation Anatomical Therapeutic Chemical (ATC) classification system.  
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+Imports: tidyr, dplyr, readr, igraph, methods, plotly, graphlayouts, rvest
+RoxygenNote: 7.3.2
+Suggests: 
+    knitr,
+    rmarkdown

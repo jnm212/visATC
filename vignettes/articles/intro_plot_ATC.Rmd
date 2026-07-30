@@ -1,0 +1,118 @@
+---
+title: "Visualising the ATC"
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(newATC)
+```
+
+
+# newATC
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+
+The goal of newATC is to extract subtrees and plot (as networks) from the World Health Organisation's (WHO) Anatomical Therapeutic Chemical (ATC) system. The ATC arranges medicines in a 5-level hierarchical system with body-system, functional and pharmacological levels. See <https://www.who.int/tools/atc-ddd-toolkit/atc-classification> for more information.
+
+In this package, tree objects are created to represent this hierarchy, with subsets of the hierarchy made in different ways, including pruning or taking cuttings. Plots of the trees can be made in a layered or circular fashion. To reduce clutter, descriptive text about the nodes is made available by hovering over the nodes using the package plotly. Because the ATC system is so large, using hovering within plots (via plotly) is the main advantage of newATC.
+
+The functionality here (code wholly rewritten since) was used as part of an approach to the detection of rare side-effects to drugs. This included Bayesian 'partial pooling' of event rates in families of drugs, with the family structure supplied by ATC. That analysis also supplied data to each node pooled from European pharmacological databases and included further modelling.
+
+Results were reported in:
+
+Schuemie, M. et al. (2012) Using electronic health care records for drug safety signal detection: a comparative evaluation of statistical methods. Medical Care 50(10):890-897
+
+## Installation
+
+You can install the development version of newATC from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("jnm212/newATC")
+```
+```{r}
+library(newATC)
+```
+
+The 'full' tree, containing all of levels 1 to 5, is created and summarised here:
+
+```{r}
+h <- atctree(schema="full")
+h
+```
+The lowest (most specific) level contains individual drugs of which there are 5678 included in the ATC release used here. The full tree is large and best plotted without annotations:
+
+```{r}
+plot(h)
+```
+
+Hovering over the nodes gives the WHO textual summary for the node.
+
+The ATC combines three concepts (anatomical, functional, pharmacological). When utilising the ATC tree it may be desirable (but not necessary) to select one of these. There are three prespecified 'schemas' which are tree representations of the hierarchical information and can be specified in the atctree constructor, along with the full tree which combines all of them. The specified schemas contain the following levels:
+
+* full: 1,2,3,4,5
+* anatomical : 1, 5
+* therapeutic : 2, 3, 5
+* chemical : 4, 5
+
+
+Other combinations of the levels may be specified but are bespoke. 
+
+When using one of the four prespecified schema, default plotting attributes are chosen with a little intelligence: for example, the default behaviour when plotting the full tree above is not to annotate and not to plot on a circle (note that hovering is always available).
+
+The highest level of the ATC is anatomical and can be plotted compactly as a tree. In this case there is space to directly print the associated text on the stems, rather than only rely only on the hover mechanism.
+
+```{r}
+# just the top level of the tree
+h <- atctree(schema="anatomical")
+plot(h, width=1000)
+
+```
+
+We can take a subset of the tree, using the 'cutting' function to examine the drugs *within* a single anatomical group: 
+
+```{r, include=F, eval=F}
+h <- atctree(schema="anatomical")
+plot(cutting(h,"D"), circle=T, text_size=5)
+
+```
+
+The second and third levels are functional or therapeutic. First the nodes within the functional group P01 (antiprotozoals):
+
+```{r}
+h <- atctree(schema="therapeutic")
+# annotations on this tree are too cluttered, so take a cutting
+plot(cutting(h, "P01"), width=1000)
+
+```
+
+and now a chemical group:
+
+```{r}
+h <- atctree(schema="chemical")
+# annotations on this tree are too cluttered, so take a cutting.
+# here there's enough space not to surpress the leaf labelling:
+plot(cutting(h, "J01DD"), leaf_label=T, text_size=5)
+# try plotting on a circle:
+plot(cutting(h, "J01DD"), leaf_label=T, circle=T, text_angle=0, text_size=5)
+```
+
+You might want to produce a bespoke tree with a subset of levels. These will have their schema set to 'none', and you will need to make decisions about the plotting arguments. For example: 
+
+``` {r}
+
+h <- atctree(whichlevs=c(1,2,4))
+plot(h, leaf_label=F)
+```
+
+To produce a less cluttered display, parts of the tree can be eliminated by pruning. See `pruning`.
+
+Another way to go about producing plots, less intuitive but with more control, is using subsetting with the `[` operator - see `subset`. This is most likely to be useful with a full ATC tree, since other schema (anatomical, therapeutic, chemical) have few generations to choose from. 
