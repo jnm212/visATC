@@ -11,5 +11,6 @@
 #' @importFrom dplyr inner_join
 #' @importFrom dplyr if_else
 #' @importFrom dplyr case_when
+#' @importFrom methods show
 ## usethis namespace: end
 NULL
