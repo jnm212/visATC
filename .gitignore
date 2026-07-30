@@ -2,6 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-docs
 inst/doc
-
+docs
+^store$
+^data-raw$
+^archive$
