@@ -310,7 +310,7 @@ setGeneric("pruning",  function(h,  ...){print(NULL)})
 #' @returns a (smaller) object of class atctree
 #' @aliases pruning
 #' @examples
-#' library(newATC)
+#' library(visATC)
 #' h1 <- atctree(whichlevs=1:3)
 #' h1A <- cutting(h1, "C")
 #' # make a subtree cut at node C

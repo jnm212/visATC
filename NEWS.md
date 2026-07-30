@@ -1,3 +1,3 @@
-# newATC 1.0.0
+# visATC 1.0.0
 
 * Initial CRAN submission.

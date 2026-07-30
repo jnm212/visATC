@@ -10,19 +10,19 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(newATC)
+library(visATC)
 ```
 
 
-# newATC
+# visATC
 
 <!-- badges: start -->
 <!-- badges: end -->
 
 
-The goal of newATC is to extract subtrees and plot (as networks) from the World Health Organisation's (WHO) Anatomical Therapeutic Chemical (ATC) system. The ATC arranges medicines in a 5-level hierarchical system with body-system, functional and pharmacological levels. See <https://www.who.int/tools/atc-ddd-toolkit/atc-classification> for more information.
+The goal of visATC is to extract subtrees and plot (as networks) from the World Health Organisation's (WHO) Anatomical Therapeutic Chemical (ATC) system. The ATC arranges medicines in a 5-level hierarchical system with body-system, functional and pharmacological levels. See <https://www.who.int/tools/atc-ddd-toolkit/atc-classification> for more information.
 
-In this package, tree objects are created to represent this hierarchy, with subsets of the hierarchy made in different ways, including pruning or taking cuttings. Plots of the trees can be made in a layered or circular fashion. To reduce clutter, descriptive text about the nodes is made available by hovering over the nodes using the package plotly. Because the ATC system is so large, using hovering within plots (via plotly) is the main advantage of newATC.
+In this package, tree objects are created to represent this hierarchy, with subsets of the hierarchy made in different ways, including pruning or taking cuttings. Plots of the trees can be made in a layered or circular fashion. To reduce clutter, descriptive text about the nodes is made available by hovering over the nodes using the package plotly. Because the ATC system is so large, using hovering within plots (via plotly) is the main advantage of visATC.
 
 The functionality here (code wholly rewritten since) was used as part of an approach to the detection of rare side-effects to drugs. This included Bayesian 'partial pooling' of event rates in families of drugs, with the family structure supplied by ATC. That analysis also supplied data to each node pooled from European pharmacological databases and included further modelling.
 
@@ -32,14 +32,14 @@ Schuemie, M. et al. (2012) Using electronic health care records for drug safety 
 
 ## Installation
 
-You can install the development version of newATC from [GitHub](https://github.com/) with:
+You can install the development version of visATC from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("jnm212/newATC")
+pak::pak("jnm212/visATC")
 ```
 ```{r}
-library(newATC)
+library(visATC)
 ```
 
 The 'full' tree, containing all of levels 1 to 5, is created and summarised here:

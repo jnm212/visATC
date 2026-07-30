@@ -1,4 +1,4 @@
-Package: newATC
+Package: visATC
 Type: Package
 Title: Visualise the Anatomical Therapeutic Chemical (ATC) Hierarchy
 Version: 1.0.0
