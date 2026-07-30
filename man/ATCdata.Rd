@@ -8,7 +8,9 @@
 A named character vector for each node, where each entry is an ATC code and the name is a textual description
 }
 \source{
-The data is from the repository at <https://github.com/fabkury/atcd> and this release is at <https://github.com/fabkury/atcd/releases/tag/april2026>.
+The ATC data can be perused at <https://atcddd.fhi.no/atc_ddd_index/>.
+
+This data is from the repository at <https://github.com/fabkury/atcd> and this release is at <https://github.com/fabkury/atcd/releases/tag/april2026>.
 
 The first two columns from the .csv file were selected to produce the named character vector
 }

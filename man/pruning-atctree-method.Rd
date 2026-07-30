@@ -19,7 +19,7 @@ a (smaller) object of class atctree
 Pruning is specifying the removal of some unwanted branch of the tree (in contrast to taking a cutting, where it is the branch which is kept).
 }
 \examples{
-library(newATC)
+library(visATC)
 h1 <- atctree(whichlevs=1:3)
 h1A <- cutting(h1, "C")
 # make a subtree cut at node C

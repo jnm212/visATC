@@ -9,6 +9,9 @@ parents(x)
 \arguments{
 \item{x}{a node label e.g. A01AX}
 }
+\value{
+character vector
+}
 \description{
 show the parents of the specified node(s)
 }

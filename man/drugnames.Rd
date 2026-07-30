@@ -7,7 +7,10 @@
 drugnames(x)
 }
 \arguments{
-\item{x}{vector of ATC codse}
+\item{x}{vector of ATC codes}
+}
+\value{
+character vector of drug names
 }
 \description{
 display drug name for ATC codes
