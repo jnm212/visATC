@@ -8,6 +8,13 @@
 \description{
 Visualisation and subsetting of the World Health Organisation Anatomical Therapeutic Chemical (ATC) classification system.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://jnm212.github.io/visATC/}
+}
+
+}
 \author{
 \strong{Maintainer}: J Matthews \email{jnmatt212@gmail.com} [copyright holder]
 
