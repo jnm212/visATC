@@ -2,7 +2,7 @@
 ###############################################################################################
 
 #' @export
-#' @title class to represent a tree from the ATC hierarchy
+#' @title class to represent a tree from the ATC  hierarchy
 #' @slot node node id
 #' @slot pnode parent node id
 #' @slot lab ATC code
