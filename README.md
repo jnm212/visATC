@@ -1,12 +1,12 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# newATC
+# visATC
 
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of newATC is to extract subtrees and plot (as networks) from
+The goal of visATC is to extract subtrees and plot (as networks) from
 the WHO Anatomical Therapeutic Chemical (ATC) system. The ATC arranges
 medicines in a 5-level hierarchical system with body-system, functional
 and pharmacological levels. See
@@ -19,7 +19,7 @@ or taking cuttings. Plots of the trees can be made in a layered or
 circular fashion. To reduce clutter, descriptive text about the nodes is
 made available by hovering over the nodes using the package plotly.
 Because the ATC system is so large, using hovering within plots (via
-plotly) is the main advantage of newATC.
+plotly) is the main advantage of visATC.
 
 The functionality here (code wholly rewritten since) was used as part of
 an approach to the detection of rare side-effects to drugs. This
@@ -36,16 +36,16 @@ methods. Medical Care 50(10):890-897
 
 ## Installation
 
-You can install the development version of newATC from
+You can install the development version of visATC from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("jnm212/newATC")
+pak::pak("jnm212/visATC")
 ```
 
 ``` r
-library(newATC)
+library(visATC)
 ```
 
 ## Example of use
@@ -66,8 +66,8 @@ h
 ```
 
 The lowest (most specific) level contains individual drugs of which
-there 5678 included in the ATC release used here. The full tree is large
-and best plotted without annotations:
+there are 5678 included in the ATC release used here. The full tree is
+large and best plotted without annotations:
 
 ``` r
 plot(h)
