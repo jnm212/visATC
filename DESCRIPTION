@@ -8,9 +8,11 @@ Description: Visualisation and subsetting of the World Health Organisation Anato
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-Imports: tidyr, dplyr, readr, igraph, methods, plotly, graphlayouts, rvest
+Imports: tidyr, dplyr, rlang, igraph, methods, plotly, graphlayouts
 RoxygenNote: 7.3.2
 Suggests: 
     knitr,
     rmarkdown
+Depends:
+    R (>= 4.1.0)
 URL: https://jnm212.github.io/visATC/
