@@ -69,15 +69,7 @@ h
 
 The lowest (most specific) level contains individual drugs of which
 there are 5678 included in the ATC release used here. The full tree is
-large and best plotted without annotations:
-
-``` r
-
-plot(h)
-#> Remember you can hover over nodes to see text
-```
-
-Hovering over the nodes gives the WHO textual summary for the node.
+large and could be plotted with `plot(h)` but takes some 10s of seconds.
 
 The ATC combines three concepts (anatomical, functional,
 pharmacological). When utilising the ATC tree it may be desirable (but
@@ -96,8 +88,8 @@ Other combinations of the levels may be specified but are bespoke.
 
 When using one of the four prespecified schema, default plotting
 attributes are chosen with a little intelligence: for example, the
-default behaviour when plotting the full tree above is not to annotate
-and not to plot on a circle (note that hovering is always available).
+default behaviour when plotting the full tree is not to annotate and not
+to plot on a circle (note that text by hovering is always available).
 
 The highest level of the ATC is anatomical and can be plotted compactly
 as a tree. In this case there is space to directly print the associated
