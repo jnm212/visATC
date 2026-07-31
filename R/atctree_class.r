@@ -75,8 +75,8 @@ setOldClass("plot")
 #' @examples
 #' # create an ATC tree and plot the whole thing:
 #' h <- atctree(schema="full")
-#' plot(h)
-#' # not easy to read
+#' # you could plot this with plot(h) but it takes a while 
+#' # large network so not easy to read
 #'
 #' # take cutting above node B ; plot all its descendants:
 #' plot(cutting(h,"B"))
@@ -87,7 +87,7 @@ setOldClass("plot")
 #' # plot node B down to its grandchildren:
 #' plot(h["B",-2])
 #' # or use a circular layout
-#' plot(h["B",-2], circle=TRUE)
+#' plot(h["B",-2], circle=TRUE, stem_label=T)
 #'
 setMethod("plot",
           signature=c("atctree"),
@@ -270,7 +270,7 @@ setMethod("cutting",
             }
 
             dataf <- make_ATC_df(whichlevs=h@whichlevs) |>
-              filter(ATC %in% all_nodes)
+              filter(.data$ATC %in% all_nodes)
 
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
 
@@ -411,7 +411,7 @@ setMethod("[", "atctree",
 
             # restrict the drug database:
             dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
-              filter(ATC %in% x@lab[ret])
+              filter(.data$ATC %in% x@lab[ret])
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
 
             h2 <- new("atctree",
