@@ -37,7 +37,8 @@ make_ATC_df <- function(whichlevs=1:5L, incl.root=T) {
 
   # work out parent ATC:
   dataf <- dataf |>
-    mutate(pATC = substr(.data$ATC, 1, .data$plen))
+    mutate(pATC = substr(.data$ATC, 1, .data$plen)) 
+  # NB don't use pATC = parents(.data$ATC) because thats for a tree with full levels
 
   # work out pnode:
   tmp <- select(dataf, .data$pATC) |>

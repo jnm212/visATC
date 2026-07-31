@@ -87,7 +87,7 @@ setOldClass("plot")
 #' # plot node B down to its grandchildren:
 #' plot(h["B",-2])
 #' # or use a circular layout
-#' plot(h["B",-2], circle=TRUE, stem_label=T)
+#' plot(h["B",-2], circle=TRUE, stem_label=TRUE)
 #'
 setMethod("plot",
           signature=c("atctree"),
