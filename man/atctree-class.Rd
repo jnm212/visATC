@@ -3,9 +3,9 @@
 \docType{class}
 \name{atctree-class}
 \alias{atctree-class}
-\title{class to represent a tree from the ATC hierarchy}
+\title{class to represent a tree from the ATC  hierarchy}
 \description{
-class to represent a tree from the ATC hierarchy
+class to represent a tree from the ATC  hierarchy
 }
 \section{Slots}{
 

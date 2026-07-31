@@ -48,8 +48,8 @@ Some subsetting (link), pruning (link) or cutting (link) of the tree is likely t
 \examples{
 # create an ATC tree and plot the whole thing:
 h <- atctree(schema="full")
-plot(h)
-# not easy to read
+# you could plot this with plot(h) but it takes a while 
+# large network so not easy to read
 
 # take cutting above node B ; plot all its descendants:
 plot(cutting(h,"B"))
@@ -60,6 +60,6 @@ plot(h["A03",0])
 # plot node B down to its grandchildren:
 plot(h["B",-2])
 # or use a circular layout
-plot(h["B",-2], circle=TRUE)
+plot(h["B",-2], circle=TRUE, stem_label=TRUE)
 
 }
