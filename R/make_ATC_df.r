@@ -3,30 +3,30 @@ make_ATC_df <- function(whichlevs=1:5L, incl.root=T) {
 
   if (!all(whichlevs %in% 1:5)) stop("levels must be subset of 1:5")
 
-#  data(ATCnames, envir = environment())
+  #data(ATCdata, envir = environment())
   codelens <- c(1,3,4,5,7)[whichlevs]
-  #pcodelens <- c(0, codelens)
+
 
   dataf <- data.frame(ATC=ATCdata, text=names(ATCdata)) |>
     dplyr::distinct()
 
   dataf <- dataf |>
-    mutate(ATC = as.character(ATC)) |>
-    mutate(len=nchar(ATC)) |>
-    arrange(dplyr::desc(len)) |>
+    mutate(ATC = as.character(.data$ATC)) |>
+    mutate(len=nchar(.data$ATC)) |>
+    arrange(dplyr::desc(.data$len)) |>
     mutate(node=1:dplyr::n()) |>
-    mutate(lev=as.numeric(factor(len, labels=1:5)))
+    mutate(lev=as.numeric(factor(.data$len, labels=1:5)))
 
   # restrict to the specified levels:
   dataf <- dataf |>
-    mutate(levindx = match(dataf$lev, whichlevs)) |>
-    filter(lev %in% whichlevs)
+    mutate(levindx = match(.data$lev, whichlevs)) |>
+    filter(.data$lev %in% whichlevs)
 
   # parent nodes:
   dataf <- dataf |>
-    mutate(plevindx = levindx-1) |>
-    mutate(plev=ifelse(plevindx==0, 0 ,  whichlevs[plevindx])) |>
-    mutate(plen = ifelse(plev==0, 0, codelens[plevindx]))
+    mutate(plevindx = .data$levindx-1) |>
+    mutate(plev=ifelse(.data$plevindx==0, 0 ,  whichlevs[.data$plevindx])) |>
+    mutate(plen = ifelse(.data$plev==0, 0, codelens[.data$plevindx]))
 
   if (incl.root) {
     # add root node:
@@ -37,24 +37,24 @@ make_ATC_df <- function(whichlevs=1:5L, incl.root=T) {
 
   # work out parent ATC:
   dataf <- dataf |>
-    mutate(pATC = substr(ATC, 1, plen))
+    mutate(pATC = substr(.data$ATC, 1, .data$plen))
 
   # work out pnode:
-  tmp <- select(dataf, pATC) |>
-    rename(ATC=pATC) |>
+  tmp <- select(dataf, .data$pATC) |>
+    rename(ATC=.data$pATC) |>
     dplyr::distinct()
 
-  dataf2 <- left_join(tmp, select(dataf, ATC, node), by="ATC" ) |>
-    rename(pATC=ATC, pnode=node)
+  dataf2 <- left_join(tmp, select(dataf, .data$ATC, .data$node), by="ATC" ) |>
+    rename(pATC=.data$ATC, pnode=.data$node)
 
   dataf <- left_join(dataf, dataf2, by="pATC", relationship = "many-to-many")
 
   dataf <- dataf |>
-    mutate(pATC = if_else(plev==0, "root", pATC))
+    mutate(pATC = if_else(.data$plev==0, "root", .data$pATC))
 
   if (incl.root) {
     dataf <- dataf |>
-      mutate(pnode = if_else(plev==0, rootn, pnode))
+      mutate(pnode = if_else(.data$plev==0, rootn, .data$pnode))
   }
 
 #  dataf <- dataf |>
