@@ -18,6 +18,9 @@ parents <- function(x) {
     return(p)
   })
 
+  pp[x=="0"] <- NA
+  # root has no parent
+  
   return(unname(pp))
 }
 
