@@ -79,4 +79,5 @@ Hovering over the nodes gives the WHO textual summary for the node,
 though this functionality is not in the README file.
 
 More examples and details of usage can be found in the website article,
-with active hovering.
+with active hovering. You might need to allow a short time (\<20 secs?)
+for the article to load.
