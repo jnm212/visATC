@@ -106,8 +106,15 @@ plot(h, width=1000)
 We can take a subset of the tree, using the ‘cutting’ function to
 examine the drugs *within* a single anatomical group:
 
-The second and third levels are functional or therapeutic. First the
-nodes within the functional group P01 (antiprotozoals):
+``` r
+
+h <- atctree(schema="anatomical")
+plot(cutting(h,"D"), circle=T)
+#> Remember you can hover over nodes to see text
+```
+
+The second and third levels are functional or therapeutic. First plot
+the nodes within the functional group P01 (antiprotozoals):
 
 ``` r
 
