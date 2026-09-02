@@ -50,10 +50,11 @@ h
 ```
 The lowest (most specific) level contains individual drugs of which there are 5678 included in the ATC release used here. The full tree is large and best plotted without annotations:
 
-```{r}
-plot(h)
+```{r, echo=FALSE}
+plot(h, hover_msg=F)
 ```
-Hovering over the nodes gives the WHO textual summary for the node, though this functionality is not in the README file. 
+Hovering over the nodes would give the WHO textual summary for the node (Note that this functionality is omitted here for the full tree, to allow a quick display). 
+
 
 More examples and details of usage can be found in the website article, with active hovering.
 You might need to allow a short time (<20 secs?) for the article to load.
