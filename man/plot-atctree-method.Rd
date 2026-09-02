@@ -21,23 +21,23 @@
 \arguments{
 \item{x}{an object of class atctree}
 
-\item{circle}{whether or not to arrange graph over a circle (default = FALSE)}
+\item{circle}{whether or not to arrange graph over a circle}
 
-\item{ATC_text}{whether or not to label with ATC textual info (default=FALSE)}
+\item{ATC_text}{whether or not to label with ATC textual info}
 
-\item{leaf_label}{whether or not leaf nodes will be labelled (default=TRUE)}
+\item{leaf_label}{whether or not leaf nodes will be labelled}
 
-\item{stem_label}{whether or not stem nodes will be labelled (default=TRUE)}
+\item{stem_label}{whether or not stem nodes will be labelled}
 
-\item{text_size}{annotation text size (default=10)}
+\item{text_size}{annotation text size}
 
-\item{text_angle}{annotation text angle (default=45)}
+\item{text_angle}{annotation text angle}
 
 \item{width}{graph width}
 
 \item{height}{graph height}
 
-\item{hover_msg}{whether to remind the user that they can hover over nodes (default=TRUE)}
+\item{hover_msg}{whether to remind the user that they can hover over nodes}
 }
 \value{
 No return value, called for side effects

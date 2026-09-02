@@ -58,15 +58,15 @@ setOldClass("plot")
 #' @export
 #' @title plot the tree as a network graph
 #' @param x an object of class atctree
-#' @param circle whether or not to arrange graph over a circle (default = FALSE)
-#' @param ATC_text whether or not to label with ATC textual info (default=FALSE)
-#' @param leaf_label whether or not leaf nodes will be labelled (default=TRUE)
-#' @param stem_label whether or not stem nodes will be labelled (default=TRUE)
-#' @param text_size annotation text size (default=10)
-#' @param text_angle annotation text angle (default=45)
+#' @param circle whether or not to arrange graph over a circle 
+#' @param ATC_text whether or not to label with ATC textual info 
+#' @param leaf_label whether or not leaf nodes will be labelled 
+#' @param stem_label whether or not stem nodes will be labelled 
+#' @param text_size annotation text size 
+#' @param text_angle annotation text angle 
 #' @param width graph width
 #' @param height graph height
-#' @param hover_msg whether to remind the user that they can hover over nodes (default=TRUE)
+#' @param hover_msg whether to remind the user that they can hover over nodes 
 #' @details
 #' Each node is labelled with its ATC code, and by hovering the cursor over any node the ATC desciption is displayed.
 #' The ATC tree can be displayed as a network in layers or on a circle (with radii corresponding to ATC level).
