@@ -66,11 +66,13 @@ setOldClass("plot")
 #' @param text_angle annotation text angle (default=45)
 #' @param width graph width
 #' @param height graph height
+#' @param hover_msg whether to remind the user that they can hover over nodes (default=TRUE)
 #' @details
 #' Each node is labelled with its ATC code, and by hovering the cursor over any node the ATC desciption is displayed.
 #' The ATC tree can be displayed as a network in layers or on a circle (with radii corresponding to ATC level).
 #' It is evident that a plot the full ATC tree is too cluttered.
 #' Some subsetting (link), pruning (link) or cutting (link) of the tree is likely to help visualisation.
+#' @returns No return value, called for side effects
 #' @aliases plot
 #' @examples
 #' # create an ATC tree and plot the whole thing:
@@ -95,9 +97,9 @@ setMethod("plot",
           function(x, circle=NULL, ATC_text=NULL,
                    leaf_label=NULL, stem_label=NULL,
                    text_size=10, text_angle=45,
-                   width=500, height=500) {
+                   width=500, height=500, hover_msg=T) {
 
-            message("Remember you can hover over nodes to see text")
+            if (hover_msg) message("Remember you can hover over nodes to see text")
 
             # define defaults if function arguments not specified:
             if (x@schema %in% c("therapeutic","anatomical")) {

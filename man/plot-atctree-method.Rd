@@ -14,7 +14,8 @@
   text_size = 10,
   text_angle = 45,
   width = 500,
-  height = 500
+  height = 500,
+  hover_msg = T
 )
 }
 \arguments{
@@ -35,6 +36,11 @@
 \item{width}{graph width}
 
 \item{height}{graph height}
+
+\item{hover_msg}{whether to remind the user that they can hover over nodes (default=TRUE)}
+}
+\value{
+No return value, called for side effects
 }
 \description{
 plot the tree as a network graph
