@@ -1,3 +1,7 @@
+## Resubmission 2
+
+I have changed =T to =TRUE in plot-atctree-method as requested
+
 ## Resubmission
 
 I have added a missing \value entry to plot-atctree-method.Rd as requested. 

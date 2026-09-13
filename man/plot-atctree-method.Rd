@@ -15,7 +15,7 @@
   text_angle = 45,
   width = 500,
   height = 500,
-  hover_msg = T
+  hover_msg = TRUE
 )
 }
 \arguments{

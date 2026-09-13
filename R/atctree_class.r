@@ -97,7 +97,7 @@ setMethod("plot",
           function(x, circle=NULL, ATC_text=NULL,
                    leaf_label=NULL, stem_label=NULL,
                    text_size=10, text_angle=45,
-                   width=500, height=500, hover_msg=T) {
+                   width=500, height=500, hover_msg=TRUE) {
 
             if (hover_msg) message("Remember you can hover over nodes to see text")
 
