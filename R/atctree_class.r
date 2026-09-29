@@ -530,44 +530,6 @@ setMethod("look", "atctree",
           }
 )
 
-###########################
-# setGeneric("plant",  function(h,  ...){print(NULL)})
 
-# setMethod("plant", "atctree",
-#          function(h) {
-#            # if tree doesn't have a root node, give it one
-#          
-#            if ("0" %in% h@lab == FALSE) {
-#              
-#              h@pnode[h@Nnode] <- h@Nnode+1
-#              h@plab[h@Nnode] <- "0"
-#              
- #             h@pnode <- c(h@pnode, NA)
-#              h@lab <- c(h@lab, "0")
- #             h@text <- c(h@text, "root")
-#              h@plab <- c(h@plab, NA)
-#              h@lev <- c(h@lev, 0)
-#              h@Nnode <- h@Nnode+1
-#              h@node <- c(h@node, h@Nnode)
-#            }
- #             
-#            return(h)  
-#            
-#          }
-#          
-#          )
-
-###########################
-
-# setGeneric("graft",  function(h1,h2){print(NULL)})
-
-# setMethod("graft", 
-#          c("atctree","atctree"), #at least two nodes
-#          function(h1,h2) {
-#              h1 <- plant(h1)
-#              h2 <- plant(h2)
-#              
-#          }
-#)
           
           
