@@ -275,7 +275,7 @@ setMethod("cutting",
               filter(.data$ATC %in% all_nodes)
             
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
-            
+           
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
@@ -284,9 +284,9 @@ setMethod("cutting",
                       plab = dataf$pATC,
                       lev = dataf$lev,
                       Nnode = length(dataf$node)-1,
-                      whichlevs = h@whichlevs,
-                      schema = schema(h@whichlevs)
+                      whichlevs = sort(unique(dataf$lev), dec=T)
             )
+            h2@schema <- schema(h2@whichlevs)
             h2@Nlev <- nlevs(h2)
             
             
@@ -455,7 +455,6 @@ setMethod("show", "atctree",
 setGeneric("parents",  function(h,  ...){print(NULL)})
 # TODO : want this to be called parents(); first need to deal with parents() in node_helpers.r: will have to have signal of string 
 
-
 setMethod("parents", "character", 
           # parent of a node as string in the full tree (=no tree specified)          
           
@@ -479,7 +478,12 @@ setMethod("parents", "character",
           }          
 )
 
-
+#' @export
+#' @title show the parents for the specified node(s) in the tree
+#' @param h tree the node belongs to
+#' @param node a node e.g. A01AX
+#' @returns atctree object
+#' 
 setMethod("parents", "atctree", 
           function(h, node, anc=1) {
             # anc indicates which ancestor; 1 (default) is parent, 2 is grandparent etc
@@ -513,6 +517,10 @@ setMethod("intree", "atctree",
 
 setGeneric("look",  function(h,  ...){print(NULL)})
 
+# nds <- look(h, "inflamm")
+# plot element nds[10] which is "A07E"
+# cutting(h, nds[10]) |> plot()
+
 setMethod("look", "atctree", 
           function(h,txt) {
             indx <- grep(txt, h@text, ignore.case=T)
@@ -521,3 +529,45 @@ setMethod("look", "atctree",
             return(nodes)
           }
 )
+
+###########################
+# setGeneric("plant",  function(h,  ...){print(NULL)})
+
+# setMethod("plant", "atctree",
+#          function(h) {
+#            # if tree doesn't have a root node, give it one
+#          
+#            if ("0" %in% h@lab == FALSE) {
+#              
+#              h@pnode[h@Nnode] <- h@Nnode+1
+#              h@plab[h@Nnode] <- "0"
+#              
+ #             h@pnode <- c(h@pnode, NA)
+#              h@lab <- c(h@lab, "0")
+ #             h@text <- c(h@text, "root")
+#              h@plab <- c(h@plab, NA)
+#              h@lev <- c(h@lev, 0)
+#              h@Nnode <- h@Nnode+1
+#              h@node <- c(h@node, h@Nnode)
+#            }
+ #             
+#            return(h)  
+#            
+#          }
+#          
+#          )
+
+###########################
+
+# setGeneric("graft",  function(h1,h2){print(NULL)})
+
+# setMethod("graft", 
+#          c("atctree","atctree"), #at least two nodes
+#          function(h1,h2) {
+#              h1 <- plant(h1)
+#              h2 <- plant(h2)
+#              
+#          }
+#)
+          
+          
