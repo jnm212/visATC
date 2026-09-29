@@ -31,17 +31,17 @@ setClass("atctree",
 
 setValidity("atctree",
             function(object) {
-
+              
               if (!all(object@whichlevs %in% 1:5)) {
                 message("Specified levels should be in 1:5")
                 return(FALSE)
               }
-
+              
               #             if (!5 %in% object@whichlevs) {
               #                message("Specified levels need to include 5")
               #               return(FALSE)
               #            }
-
+              
               return(TRUE)
             }
 )
@@ -93,14 +93,14 @@ setOldClass("plot")
 #'
 setMethod("plot",
           signature=c("atctree"),
-
+          
           function(x, circle=NULL, ATC_text=NULL,
                    leaf_label=NULL, stem_label=NULL,
                    text_size=10, text_angle=45,
                    width=500, height=500, hover_msg=TRUE) {
-
+            
             if (hover_msg) message("Remember you can hover over nodes to see text")
-
+            
             # define defaults if function arguments not specified:
             if (x@schema %in% c("therapeutic","anatomical")) {
               circle <- ifelse(is.null(circle), FALSE, circle)
@@ -120,52 +120,52 @@ setMethod("plot",
               leaf_label <- ifelse(is.null(leaf_label), FALSE, leaf_label)
               stem_label <- ifelse(is.null(stem_label), FALSE, stem_label)
             }
-
+            
             if (ATC_text==FALSE) {
               labvec <- x@lab
             } else {
               labvec <- x@text
             }
-
+            
             if (leaf_label==FALSE) {
               labvec[x@lev==max(unique(x@lev))] <- ""
             }
             if (stem_label==FALSE) {
               labvec[x@lev!=max(unique(x@lev))] <- ""
             }
-
+            
             nV <- length(x@node) #, na.rm=TRUE) #number of vertices
             #        V <- 1:nV #vertices
-
+            
             A <- matrix(0,nrow=nV, ncol=nV)
             for (ii in 1:nV) {
               A[ii, which(x@node==x@pnode[ii])] <- 1
             }
             #create adjacency matrix
-
+            
             G <- igraph::graph.adjacency(A)
-
+            
             if (circle) {
               #            L <- igraph::layout_as_tree(G,circular=TRUE)
               L <- graphlayouts::layout_with_centrality(G, cent=5-x@lev)
               Xn <- L[,1]
               Yn <- L[,2]
-
+              
             } else {
               L <- igraph::layout_with_sugiyama(G, layers=x@lev)
               Xn <- L$layout[,1]
               Yn <- L$layout[,2]
             }
-
+            
             es <- as.data.frame(igraph::get.edgelist(G))
-
+            
             if (nrow(es)==0) stop("Nothing to plot")
-
+            
             edge_shapes <- list()
             for(i in 1:nrow(es)) {
               v0 <- es[i,]$V1
               v1 <- es[i,]$V2
-
+              
               edge_shape = list(
                 type = "line",
                 opacity=0.25,
@@ -175,11 +175,11 @@ setMethod("plot",
                 x1 = Xn[v1],
                 y1 = Yn[v1]
               )
-
+              
               edge_shapes[[i]] <- edge_shape
             }
-
-
+            
+            
             network <- plotly::plot_ly(x = ~Xn, y = ~Yn,
                                        width = width,
                                        height = height,
@@ -188,11 +188,11 @@ setMethod("plot",
                                        hovertext = paste(x@lab,x@text,sep=":"),
                                        hoverinfo = "text"
             )
-
+            
             axis <- list(title = "", showgrid = FALSE, showticklabels = FALSE, zeroline = FALSE)
-
-
-
+            
+            
+            
             fig <- plotly::layout(
               autosize = F,
               network,
@@ -206,12 +206,12 @@ setMethod("plot",
                 t = 0
               )
               #font=list(size=text_size)
-              ) |>
-
+            ) |>
+              
               #        plotly::add_text(text=x@lab,
               #                 textfont = list(size = 8, textposition=2)
               #                 ) |>
-
+              
               plotly::add_annotations(
                 text=labvec,
                 showarrow=leaf_label & stem_label,
@@ -223,8 +223,8 @@ setMethod("plot",
                 #showarrow=FALSE,
                 textangle=text_angle)
             # if wish to rotate the bottom nodes need to do this
-
-
+            
+            
             fig
           }
 )
@@ -255,27 +255,27 @@ setGeneric("cutting",  function(h,  ...){print(NULL)})
 
 setMethod("cutting",
           signature("atctree"),
-
+          
           function (h, nodelabel=NULL) {
-
+            
             if (is.null(nodelabel)) stop("No cutting node supplied")
             if (length(nodelabel)>1) stop("When cutting supply just one node")
             if (!nodelabel %in% h@lab) stop("This cutting node is not in the tree")
-
+            
             indx <- grep(paste0("^",nodelabel),h@lab)
             #indices where label starts with same pattern
-
+            
             if (any(grepl(paste0("^", parents(nodelabel), "$"),h@lab))) { # if parent exists in the source tree
               all_nodes <- c(h@lab[indx], parents(nodelabel)) #include parent
             } else {
               all_nodes <- c(h@lab[indx], "0") # include root
             }
-
+            
             dataf <- make_ATC_df(whichlevs=h@whichlevs) |>
               filter(.data$ATC %in% all_nodes)
-
+            
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
-
+            
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
@@ -288,12 +288,12 @@ setMethod("cutting",
                       schema = schema(h@whichlevs)
             )
             h2@Nlev <- nlevs(h2)
-
-
+            
+            
             #browser()
             return(h2)
           }
-
+          
 )
 
 #removes all branches below this node (i.e. at lower levels of the upside-down tree)
@@ -323,31 +323,31 @@ setGeneric("pruning",  function(h,  ...){print(NULL)})
 
 setMethod("pruning",
           signature("atctree"),
-
+          
           function (h, nodelabels=NULL) {
-
+            
             if (is.null(nodelabels)) stop("No labels supplied!")
             if (any(!nodelabels %in% h@lab)) stop("Pruning node(s) not in the tree")
-
+            
             remove_nodes <- vector()
             for (node in nodelabels) {
               indx <- grep(paste("^",node,sep=""),h@lab)
               #indices where label starts with same pattern
               remove_nodes <- c(remove_nodes, indx)
             }
-
+            
             h@lab <- h@lab[-remove_nodes]
             h@pnode <- h@pnode[-remove_nodes]
             h@text <- h@text[-remove_nodes]
             h@node <- h@node[-remove_nodes]
             h@lev <- h@lev[-remove_nodes]
             h@plab <- h@plab[-remove_nodes]
-
+            
             h@Nnode <- length(h@node)-1
             # leave out the root node
-
+            
             return(h)
-
+            
           }
 )
 
@@ -371,51 +371,45 @@ setMethod("pruning",
 #' @examples
 #' h <- atctree(schema="full")
 #' #more useful to use the full tree with this approach
-#' # plot the siblings of C01:
-#' plot(h["C01",0], ATC_text=TRUE, stem_label=TRUE, leaf_label=TRUE)
+
 #' # plot descendents of P01 (as far as grandchildren):
 #' plot(h["P01",-2], stem_label=TRUE, leaf_label=TRUE)
 #' # plot descendents of P01 (as far as great grandchildren):
 #' plot(h["P01",-3], stem_label=TRUE, leaf_label=TRUE)
-#'
-setMethod("[", "atctree",
-          function(x,  i, j=0) {
+#' # plot descendents of parent of P01A:
+#' plot(h["P01A",1], stem_label=TRUE, leaf_label=TRUE)
+#' # plot descendents of grandparent of P01A:
+#' plot(h["P01A",2], stem_label=TRUE, leaf_label=TRUE)
 
-            ret <- which(x@lab %in% i) # base node
-            #print(ret)
+setMethod("[", "atctree",
+          function(x,  i, j=1L) {
+
+            if (j==0) stop("j must be nonzero")
+            if (!is.integer(j)) j <- as.integer(j)
+            if (!intree(x,i)) stop("focal node not in tree")
+                        
+            ff <- function(node) unlist(sapply(node, function(n) which(x@plab==x@lab[n]))) #find child node
+            
             if (j<0) {
-              ff <- function(node) unlist(sapply(node, function(n) which(x@plab==x@lab[n]))) #find child node
+              ret <- which(x@lab %in% i) 
               for (ii in -1:j) {
                 ret <- c(ret, ff(ret))
-                #print(ret)
               }
-              #labels of descendants; j=-1 is children etc
-            }
-
-            if (j>0) {
-              ff <- function(node) unlist(sapply(node, function(n) which(x@lab==x@plab[n]))) #find parent node
-              for (ii in 1:j) {
+            } else {
+              ret <- which(x@lab==parents(h,i,j)) #find the ancestor
+              for (ii in -1:-j) {
                 ret <- c(ret, ff(ret))
-                #print(ret)
               }
-              #labels of ancestors; j=1 is parents etc
             }
-
-            if (j==0) {
-              ret <- which(x@plab==x@plab[ret]) #nodes with the same parent = siblings
-
-              ret <- c(ret, which(x@lab==x@plab[ret[1]]))
-              # include the parent node too in the tree, if it exists
-            }
+            # set the base node and find labels of descendents
 
             if (length(ret)==0) return(NULL)
-
-
+            
             # restrict the drug database:
             dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
               filter(.data$ATC %in% x@lab[ret])
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
-
+            
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
@@ -428,9 +422,9 @@ setMethod("[", "atctree",
                       schema = schema(x@whichlevs)
             )
             h2@Nlev <- nlevs(h2)
-
+            
             return(h2)
-
+            
           }
 )
 
@@ -446,14 +440,14 @@ setMethod("[", "atctree",
 #'
 setMethod("show", "atctree",
           function(object) {
-
+            
             cat("\n schema: ", object@schema)
             cat("\n total number of nodes: ", object@Nnode)
             cat("\n total number of levels: ", object@Nlev)
             cat("\n number of nodes by level :")
             print(table(object@lev)[-1]) # leave out the root node
           }
-
+          
 )
 
 ######################################################
@@ -463,27 +457,27 @@ setGeneric("parents",  function(h,  ...){print(NULL)})
 
 
 setMethod("parents", "character", 
-# parent of a node as string in the full tree (=no tree specified)          
-
+          # parent of a node as string in the full tree (=no tree specified)          
+          
           function(h) {
-          codelens <- c(1,3,4,5,7)
-          
-          pp <- sapply(h, function(y) {
-            indx <- match(nchar(y), codelens)
-            if (indx==1) {
-              p <- "0"
-            } else {
-              p <- substr(y,start=1,stop=codelens[indx-1])
-            }
-            return(p)
-          })
-          
-          pp[h=="0"] <- NA
-          # root has no parent
-          
-          return(unname(pp))
+            codelens <- c(1,3,4,5,7)
+            
+            pp <- sapply(h, function(y) {
+              indx <- match(nchar(y), codelens)
+              if (indx==1) {
+                p <- "0"
+              } else {
+                p <- substr(y,start=1,stop=codelens[indx-1])
+              }
+              return(p)
+            })
+            
+            pp[h=="0"] <- NA
+            # root has no parent
+            
+            return(unname(pp))
           }          
-          )
+)
 
 
 setMethod("parents", "atctree", 
@@ -491,12 +485,12 @@ setMethod("parents", "atctree",
             # anc indicates which ancestor; 1 (default) is parent, 2 is grandparent etc
             
             if (anc<1) stop("anc argument must be >=1")
-            if (!is.integer(anc)) stop("anc argument must be integer")
+            if (!is.integer(anc)) anc <- as.integer(anc)
             
             levlen <- c(1,3,4,5,7)[h@whichlevs] # lengths of labels in each level
             
             nodelev <- which(levlen==nchar(node)) # level of active node
-
+            
             if (anc>=nodelev) {
               ret <- NA
             } else {
@@ -505,3 +499,12 @@ setMethod("parents", "atctree",
             
             return(ret) #parent node
           })
+####################
+
+setGeneric("intree",  function(h,  ...){print(NULL)})
+
+setMethod("intree", "atctree", 
+          function(h,node) {
+            ifelse (node %in% h@lab, TRUE, FALSE)
+          }
+)
