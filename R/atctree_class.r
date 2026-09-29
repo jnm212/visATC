@@ -375,7 +375,7 @@ setMethod("pruning",
 #' # plot descendents of P01 (as far as grandchildren):
 #' plot(h["P01",-2], stem_label=TRUE, leaf_label=TRUE)
 #' # plot descendents of P01 (as far as great grandchildren):
-#' plot(h["P01",-3], stem_label=TRUE, leaf_label=TRUE)
+#' plot(h["P01",-3], stem_label=TRUE, leaf_label=FALSE)
 #' # plot descendents of parent of P01A:
 #' plot(h["P01A",1], stem_label=TRUE, leaf_label=TRUE)
 #' # plot descendents of grandparent of P01A:
@@ -506,5 +506,18 @@ setGeneric("intree",  function(h,  ...){print(NULL)})
 setMethod("intree", "atctree", 
           function(h,node) {
             ifelse (node %in% h@lab, TRUE, FALSE)
+          }
+)
+
+###################
+
+setGeneric("look",  function(h,  ...){print(NULL)})
+
+setMethod("look", "atctree", 
+          function(h,txt) {
+            indx <- grep(txt, h@text, ignore.case=T)
+            nodes <- h@lab[indx]
+            names(nodes) <- h@text[indx]
+            return(nodes)
           }
 )
