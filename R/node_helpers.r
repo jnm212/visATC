@@ -1,31 +1,5 @@
-if (0) { #ELIMINATED IN FAVOUR OF GENERIC
-  #' @export
-  #' @title show the parents of the specified node(s)
-  #' @param x a node label e.g. A01AX
-  #' @returns character vector
-  parents <- function(x) {
-    # x is node label(s)
-    
-    codelens <- c(1,3,4,5,7)
-    
-    pp <- sapply(x, function(y) {
-      indx <- match(nchar(y), codelens)
-      if (indx==1) {
-        p <- "0"
-      } else {
-        p <- substr(y,start=1,stop=codelens[indx-1])
-      }
-      return(p)
-    })
-    
-    pp[x=="0"] <- NA
-    # root has no parent
-    
-    return(unname(pp))
-  }
-}
 
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 
 # given a vector of levels, return the schema type if any
 # levs is subset of integers 1:5
