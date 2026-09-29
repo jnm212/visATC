@@ -456,4 +456,52 @@ setMethod("show", "atctree",
 
 )
 
+######################################################
 
+setGeneric("parents",  function(h,  ...){print(NULL)})
+# TODO : want this to be called parents(); first need to deal with parents() in node_helpers.r: will have to have signal of string 
+
+
+setMethod("parents", "character", 
+# parent of a node as string in the full tree (=no tree specified)          
+
+          function(h) {
+          codelens <- c(1,3,4,5,7)
+          
+          pp <- sapply(h, function(y) {
+            indx <- match(nchar(y), codelens)
+            if (indx==1) {
+              p <- "0"
+            } else {
+              p <- substr(y,start=1,stop=codelens[indx-1])
+            }
+            return(p)
+          })
+          
+          pp[h=="0"] <- NA
+          # root has no parent
+          
+          return(unname(pp))
+          }          
+          )
+
+
+setMethod("parents", "atctree", 
+          function(h, node, anc=1) {
+            # anc indicates which ancestor; 1 (default) is parent, 2 is grandparent etc
+            
+            if (anc<1) stop("anc argument must be >=1")
+            if (!is.integer(anc)) stop("anc argument must be integer")
+            
+            levlen <- c(1,3,4,5,7)[h@whichlevs] # lengths of labels in each level
+            
+            nodelev <- which(levlen==nchar(node)) # level of active node
+
+            if (anc>=nodelev) {
+              ret <- NA
+            } else {
+              ret <- substr(node, 1, levlen[nodelev-anc])
+            }
+            
+            return(ret) #parent node
+          })
