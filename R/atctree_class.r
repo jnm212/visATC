@@ -443,9 +443,9 @@ setMethod("show", "atctree",
             
             cat("\n schema: ", object@schema)
             cat("\n total number of nodes: ", object@Nnode)
-            cat("\n total number of levels: ", object@Nlev)
+            cat("\n total number of levels (excluding 0): ", object@Nlev)
             cat("\n number of nodes by level :")
-            print(table(object@lev)[-1]) # leave out the root node
+            print(table(object@lev)) 
           }
           
 )
