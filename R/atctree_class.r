@@ -83,9 +83,6 @@ setOldClass("plot")
 #' # take cutting above node B ; plot all its descendants:
 #' plot(cutting(h,"B"))
 #'
-#' # plot siblings of node A03
-#' plot(h["A03",0])
-#'
 #' # plot node B down to its grandchildren:
 #' plot(h["B",-2])
 #' # or use a circular layout
@@ -265,11 +262,11 @@ setMethod("cutting",
             indx <- grep(paste0("^",nodelabel),h@lab)
             #indices where label starts with same pattern
             
-            if (any(grepl(paste0("^", parents(nodelabel), "$"),h@lab))) { # if parent exists in the source tree
-              all_nodes <- c(h@lab[indx], parents(nodelabel)) #include parent
-            } else {
+ #           if (any(grepl(paste0("^", parents(nodelabel), "$"),h@lab))) { # if parent exists in the source tree
+#              all_nodes <- c(h@lab[indx], parents(nodelabel)) #include parent
+ #           } else {
               all_nodes <- c(h@lab[indx], "0") # include root
-            }
+  #          }
             
             dataf <- make_ATC_df(whichlevs=h@whichlevs) |>
               filter(.data$ATC %in% all_nodes)
@@ -327,7 +324,7 @@ setMethod("pruning",
           function (h, nodelabels=NULL) {
             
             if (is.null(nodelabels)) stop("No labels supplied!")
-            if (any(!nodelabels %in% h@lab)) stop("Pruning node(s) not in the tree")
+            if (any(intree(h,nodelabels)==FALSE)) stop("Pruning node(s) not in the tree")
             
             remove_nodes <- vector()
             for (node in nodelabels) {
@@ -384,7 +381,7 @@ setMethod("pruning",
 setMethod("[", "atctree",
           function(x,  i, j=1L) {
 
-            if (j==0) return(x) #do nothing
+            if (j==0) {message("no ancestors or descendents indicated"); return(NULL)} #do nothing
             if (!is.integer(j)) j <- as.integer(j)
             if (!intree(x,i)) stop("focal node not in tree")
                         
@@ -397,6 +394,7 @@ setMethod("[", "atctree",
               }
             } else {
               ret <- which(x@lab==parents(h,i,j)) #find the ancestor
+              if (length(ret)==0) {print("No ancestor found"); return(NULL)}
               for (ii in -1:-j) {
                 ret <- c(ret, ff(ret))
               }
@@ -404,10 +402,12 @@ setMethod("[", "atctree",
             # set the base node and find labels of descendents
 
             if (length(ret)==0) return(NULL)
-            
+
+            all_nodes <- c(x@lab[ret], "0") #include root
+
             # restrict the drug database:
             dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
-              filter(.data$ATC %in% x@lab[ret])
+              filter(.data$ATC %in% all_nodes)
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
             
             h2 <- new("atctree",
