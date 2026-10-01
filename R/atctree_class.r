@@ -260,7 +260,7 @@ setMethod("cutting",
             
             if (is.null(nodelabel)) stop("No cutting node supplied")
             if (length(nodelabel)>1) stop("When cutting supply just one node")
-            if (!nodelabel %in% h@lab) stop("This cutting node is not in the tree")
+            if (intree(h,nodelabel)==FALSE) stop("This cutting node is not in the tree")
             
             indx <- grep(paste0("^",nodelabel),h@lab)
             #indices where label starts with same pattern
@@ -275,7 +275,7 @@ setMethod("cutting",
               filter(.data$ATC %in% all_nodes)
             
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
-           
+         
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
@@ -284,7 +284,7 @@ setMethod("cutting",
                       plab = dataf$pATC,
                       lev = dataf$lev,
                       Nnode = length(dataf$node)-1,
-                      whichlevs = sort(unique(dataf$lev), dec=T)
+                      whichlevs = setdiff(sort(unique(dataf$lev), dec=T),0)
             )
             h2@schema <- schema(h2@whichlevs)
             h2@Nlev <- nlevs(h2)
@@ -384,7 +384,7 @@ setMethod("pruning",
 setMethod("[", "atctree",
           function(x,  i, j=1L) {
 
-            if (j==0) stop("j must be nonzero")
+            if (j==0) return(x) #do nothing
             if (!is.integer(j)) j <- as.integer(j)
             if (!intree(x,i)) stop("focal node not in tree")
                         
