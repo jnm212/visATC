@@ -61,10 +61,10 @@ h
 #> 
 #>  schema:  full
 #>  total number of nodes:  6996
-#>  total number of levels:  5
+#>  total number of levels (excluding 0):  5
 #>  number of nodes by level :
-#>    1    2    3    4    5 
-#>   14   94  271  939 5678
+#>    0    1    2    3    4    5 
+#>    1   14   94  271  939 5678
 ```
 
 The lowest (most specific) level contains individual drugs of which
