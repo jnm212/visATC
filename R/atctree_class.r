@@ -1,4 +1,10 @@
 
+setGeneric("cutting",  function(h,  ...){print(NULL)})
+setGeneric("pruning",  function(h,  ...){print(NULL)})
+setGeneric("parents",  function(h,  ...){print(NULL)})
+setGeneric("look",  function(h,  ...){print(NULL)})
+setGeneric("graft",  function(h1,h2){print(NULL)})
+
 ###############################################################################################
 
 #' @export
@@ -229,7 +235,6 @@ setMethod("plot",
 
 ##############################################################
 
-setGeneric("cutting",  function(h,  ...){print(NULL)})
 
 #' @export
 #' @title cutting from an ATC tree
@@ -304,7 +309,6 @@ setMethod("cutting",
 ########################################################################
 
 
-setGeneric("pruning",  function(h,  ...){print(NULL)})
 
 #' @export
 #' @title prune an ATC tree
@@ -459,8 +463,6 @@ setMethod("show", "atctree",
 
 ######################################################
 
-setGeneric("parents",  function(h,  ...){print(NULL)})
-# TODO : want this to be called parents(); first need to deal with parents() in node_helpers.r: will have to have signal of string 
 
 setMethod("parents", "character", 
           # parent of a node as string in the full tree (=no tree specified)          
@@ -513,7 +515,6 @@ setMethod("parents", "atctree",
 
 ###################
 
-setGeneric("look",  function(h,  ...){print(NULL)})
 
 # nds <- look(h, "inflamm")
 # plot element nds[10] which is "A07E"
@@ -555,3 +556,55 @@ setAs("atctree", "data.frame",
         
         return(df)
       })
+
+#################################
+
+
+
+#' @export
+#' @title graft two trees; combine them and share the root
+#' @param h1 an atctree
+#' @param h2 an atctree
+#' @details
+#' at the moment:
+#' - the branches need to be of the same schema/have the same levels
+#' - only works with two branches
+#'  
+#' @returns an object of class atctree
+#' @examples
+#' inflam <- unname(look(h, "inflamm")[1:2])
+#' # some nodes involving inflammation
+#' h1 <- cutting(h, "M01")
+#' h2 <- cutting(h, "A07")
+#' graft(h1,h2) |> plot(circle=T, leaf=F)
+
+# first deal with two trees only; later a whole list
+setMethod("graft", 
+          c("atctree","atctree"), #at least two nodes
+          function(h1,h2) {
+            
+            if (identical(h1@whichlevs,h2@whichlevs)==FALSE) stop("trees must have same levels when grafting")
+            if (identical(h1@schema,h2@schema)==FALSE) stop("trees must have same schema")
+            
+            dataf <- bind_rows(
+              as(h1, "data.frame"),
+              as(h2, "data.frame")
+            ) |>
+              dplyr::distinct() #should eliminate multiple root records
+            
+            h <- new("atctree",
+                     pnode = dataf$pnode,
+                     node = dataf$node,
+                     lab = dataf$ATC,
+                     text = dataf$text,
+                     plab = dataf$pATC,
+                     lev = dataf$lev,
+                     Nnode = length(dataf$node)-1,
+                     whichlevs = h1@whichlevs,
+                     schema = schema(h1@whichlevs)
+            )
+            h@Nlev <- nlevs(h2)
+            
+            return(h) 
+          }
+)
