@@ -391,7 +391,7 @@ setMethod("pruning",
 setMethod("[", "atctree",
           function(x,  i, j=1L) {
 
-            if (j==0) {message("no ancestors or descendents indicated"); return(NULL)} #do nothing
+            if (j==0) {message("no ancestors or descendents indicated"); return(x)} #do nothing
             if (!is.integer(j)) j <- as.integer(j)
             if (!intree(x,i)) stop("focal node not in tree")
                         
