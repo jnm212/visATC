@@ -572,11 +572,11 @@ setAs("atctree", "data.frame",
 #'  
 #' @returns an object of class atctree
 #' @examples
-#' inflam <- unname(look(h, "inflamm")[1:2])
-#' # some nodes involving inflammation
+#' # some nodes involving inflammation from look(h, "inflamm")
+#' h <- atctree(schema="full")
 #' h1 <- cutting(h, "M01")
 #' h2 <- cutting(h, "A07")
-#' graft(h1,h2) |> plot(circle=T, leaf=F)
+#' graft(h1,h2) |> plot(circle=TRUE, leaf=FALSE)
 
 # first deal with two trees only; later a whole list
 setMethod("graft", 
