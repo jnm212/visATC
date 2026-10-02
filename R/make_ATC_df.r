@@ -28,6 +28,9 @@ make_ATC_df <- function(whichlevs=1:5L, incl.root=T) {
     mutate(plev=ifelse(.data$plevindx==0, 0 ,  whichlevs[.data$plevindx])) |>
     mutate(plen = ifelse(.data$plev==0, 0, codelens[.data$plevindx]))
 
+  dataf <- select(dataf, -levindx, -plevindx)
+  # only used locally
+  
   if (incl.root) {
     # add root node:
     rootn <- max(dataf$node)+1
