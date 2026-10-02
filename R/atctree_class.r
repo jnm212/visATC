@@ -504,15 +504,6 @@ setMethod("parents", "atctree",
             
             return(ret) #parent node
           })
-####################
-
-setGeneric("intree",  function(h,  ...){print(NULL)})
-
-setMethod("intree", "atctree", 
-          function(h,node) {
-            ifelse (node %in% h@lab, TRUE, FALSE)
-          }
-)
 
 ###################
 

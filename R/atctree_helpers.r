@@ -48,3 +48,14 @@ setGeneric("nlevs",  function(h,  ...){print(NULL)})
 setMethod("nlevs", "atctree",
           function(h)  length(unique(setdiff(h@lev,0)))
 )
+
+####################
+
+setGeneric("intree",  function(h,  ...){print(NULL)})
+
+setMethod("intree", "atctree", 
+          function(h,node) {
+            ifelse (node %in% h@lab, TRUE, FALSE)
+          }
+)
+
