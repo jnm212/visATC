@@ -408,6 +408,7 @@ setMethod("[", "atctree",
             # restrict the drug database:
             dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
               filter(.data$ATC %in% all_nodes)
+    
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
             
             h2 <- new("atctree",
@@ -530,6 +531,30 @@ setMethod("look", "atctree",
           }
 )
 
+##################
 
-          
-          
+setAs("atctree", "data.frame",
+      function(from) {
+        
+        df <- data.frame(ATC=from@lab, 
+                         text=from@text, 
+                         len=nchar(from@lab), 
+                         node=from@node, 
+                         lev=from@lev, 
+                         plev=from@lev[from@pnode],
+                         pATC=from@lab[from@pnode], 
+                         pnode=from@pnode)
+        
+        df$len[df$text=="root"] <- 0
+        
+        df$plen <- nchar(df$pATC)
+        
+        df$plen[df$pATC=="0"] <- 0
+        df$pATC[df$pATC=="0"] <- "root"
+        
+        df <- df |> 
+          dplyr::relocate(pnode, .after=pATC) |> 
+          dplyr::relocate(plen, .after=plev) 
+        
+        return(df)
+      })
