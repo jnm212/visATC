@@ -268,8 +268,14 @@ setMethod("cutting",
               all_nodes <- c(h@lab[indx], "0") # include root
   #          }
             
-            dataf <- make_ATC_df(whichlevs=h@whichlevs) |>
+            dataf <- as(h, "data.frame") |> #make_ATC_df(whichlevs=h@whichlevs) |>
               filter(.data$ATC %in% all_nodes)
+            
+            # the cutting node needs resetting so that its parent is the root node:
+            dataf$plev[dataf$ATC==nodelabel] <- 0
+            dataf$plen[dataf$ATC==nodelabel] <- 0
+            dataf$pATC[dataf$ATC==nodelabel] <- "root"
+            dataf$pnode[dataf$ATC==nodelabel] <- dataf$node[dataf$ATC=="0"]
             
             if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
          
