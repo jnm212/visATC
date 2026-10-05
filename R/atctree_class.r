@@ -3,7 +3,7 @@ setGeneric("cutting",  function(h,  ...){print(NULL)})
 setGeneric("pruning",  function(h,  ...){print(NULL)})
 setGeneric("parents",  function(h,  ...){print(NULL)})
 setGeneric("look",  function(h,  ...){print(NULL)})
-setGeneric("graft",  function(h1,h2){print(NULL)})
+setGeneric("graft",  function(h1,h2, ...){print(NULL)})
 
 ###############################################################################################
 
@@ -577,9 +577,7 @@ setAs("atctree", "data.frame",
 #' @param h1 an atctree
 #' @param h2 an atctree
 #' @details
-#' at the moment:
-#' - the branches need to be of the same schema/have the same levels
-#' - only works with two branches
+#' at the moment the branches need to be of the same schema/have the same levels
 #'  
 #' @returns an object of class atctree
 #' @examples
@@ -589,24 +587,31 @@ setAs("atctree", "data.frame",
 #' h2 <- cutting(h, "A07")
 #' graft(h1,h2) |> plot(circle=TRUE, leaf=FALSE)
 #'
-#' h1 <- h["P01AA",2]
-#' h2 <- h["C01",-1]
-#' graft(h1, h2) |> plot(stem_label=TRUE, circle=T)
-
+#' h1 <- h["P01",-3] #P01 to great grandchildren
+#' h2 <- h["C01",-1] #C01 to children
+#' h3 <- cutting(h, "G01A") #descendents of G01A
+#' graft(h1, h2, h3) |> plot(stem_label=TRUE)
 
 # first deal with two trees only; later a whole list
 setMethod("graft", 
           c("atctree","atctree"), #at least two nodes
-          function(h1,h2) {
+          function(h1,h2,...) {
             
             if (identical(h1@whichlevs,h2@whichlevs)==FALSE) stop("trees must have same levels when grafting")
             if (identical(h1@schema,h2@schema)==FALSE) stop("trees must have same schema when grafting")
             
-            dataf <- bind_rows(
-              as(h1, "data.frame"),
-              as(h2, "data.frame")
-            ) |>
-              dplyr::distinct() #should eliminate multiple root records
+            hs <- c(h1, h2, list(...))
+
+            dataf <- purrr::map(hs, function(x) as(x,"data.frame")) |>
+              purrr::list_rbind() |>
+              dplyr::distinct()
+
+# previous code for h1,h2 only:
+#            dataf <- bind_rows(
+#              as(h1, "data.frame"),
+#              as(h2, "data.frame")
+#            ) |>
+#              dplyr::distinct() #should eliminate multiple root records
             
             h <- new("atctree",
                      pnode = dataf$pnode,
