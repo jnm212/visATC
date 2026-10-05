@@ -5,7 +5,7 @@
 # levs is subset of integers 1:5
 schema <- function(levs) {
   
-  if (any(levs %in% 1:5)==F) stop("levs needs to be a subset of 1:5")
+  if (any(levs %in% 1:5)==FALSE) stop("levs needs to be a subset of 1:5")
   
   levs <- as.integer(levs)
   
