@@ -380,13 +380,13 @@ setMethod("pruning",
 #' #more useful to use the full tree with this approach
 
 #' # plot descendents of P01 (as far as grandchildren):
-#' plot(h["P01",-2], stem_label=TRUE, leaf_label=TRUE)
+#' h["P01",-2] |> plot(stem_label=TRUE, leaf_label=TRUE)
 #' # plot descendents of P01 (as far as great grandchildren):
-#' plot(h["P01",-3], stem_label=TRUE, leaf_label=FALSE)
+#' h["P01",-3] |> plot(stem_label=TRUE, leaf_label=FALSE)
 #' # plot descendents of parent of P01A:
-#' plot(h["P01A",1], stem_label=TRUE, leaf_label=TRUE)
+#' h["P01A",1] |> plot(stem_label=TRUE, leaf_label=TRUE)
 #' # plot descendents of grandparent of P01A:
-#' plot(h["P01A",2], stem_label=TRUE, leaf_label=TRUE)
+#' h["P01A",2] |> plot(stem_label=TRUE, leaf_label=TRUE)
 
 setMethod("[", "atctree",
           function(x,  i, j=1L) {
@@ -415,12 +415,23 @@ setMethod("[", "atctree",
 
             all_nodes <- c(x@lab[ret], "0") #include root
 
-            # restrict the drug database:
-            dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
+#            # restrict the drug database:
+#            dataf <- make_ATC_df(whichlevs=x@whichlevs) |>
+#              filter(.data$ATC %in% all_nodes)
+#                if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
+
+            dataf <- as(h, "data.frame") |> 
               filter(.data$ATC %in% all_nodes)
-    
-            if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
             
+            # the highest node needs resetting so that its parent is the root node:
+            ifelse (j>0, topnode <- parents(x,i,j), topnode <- i)
+      
+            dataf$plev[dataf$ATC==topnode] <- 0
+            dataf$plen[dataf$ATC==topnode] <- 0
+            dataf$pATC[dataf$ATC==topnode] <- "root"
+            dataf$pnode[dataf$ATC==topnode] <- dataf$node[dataf$ATC=="0"]
+            
+                        
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
