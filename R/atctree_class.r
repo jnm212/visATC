@@ -292,7 +292,7 @@ setMethod("cutting",
                       plab = dataf$pATC,
                       lev = dataf$lev,
                       Nnode = length(dataf$node)-1,
-                      whichlevs = setdiff(sort(unique(dataf$lev), dec=T),0)
+                      whichlevs = setdiff(sort(unique(dataf$lev), decreasing=T),0)
             )
             h2@schema <- schema(h2@whichlevs)
             h2@Nlev <- nlevs(h2)
@@ -474,14 +474,22 @@ setMethod("show", "atctree",
 
 ######################################################
 
+#' @export
+#' @title show the parents for the specified node(s) in the full tree
+#' @param h node(s)
+#' @returns parent node(s)
+#' @examples
+#' parents(c("A01AA","A01","A"))
+#' 
 
 setMethod("parents", "character", 
           # parent of a node as string in the full tree (=no tree specified)          
           
           function(h) {
             codelens <- c(1,3,4,5,7)
+            node <- h
             
-            pp <- sapply(h, function(y) {
+            pp <- sapply(node, function(y) {
               indx <- match(nchar(y), codelens)
               if (indx==1) {
                 p <- "0"
@@ -491,17 +499,22 @@ setMethod("parents", "character",
               return(p)
             })
             
-            pp[h=="0"] <- NA
+            pp[node=="0"] <- NA
             # root has no parent
             
             return(unname(pp))
           }          
 )
 
+
+
+
 #' @export
 #' @title show the parents for the specified node(s) in the tree
 #' @param h tree the node belongs to
 #' @param node a node e.g. A01AX
+#' @param anc level of ancestry (default 1). How many generations back or forward?
+#' @aliases parents
 #' @returns atctree object
 #' 
 setMethod("parents", "atctree", 
@@ -527,9 +540,19 @@ setMethod("parents", "atctree",
 ###################
 
 
-# nds <- look(h, "inflamm")
-# plot element nds[10] which is "A07E"
-# cutting(h, nds[10]) |> plot()
+#' @export
+#' @title search the node texts for an expression
+#' @param h an object of class atctree
+#' @param txt word or part of a word or regular expression to search for
+#' @aliases look
+#' @returns returns a vector of nodes whose text matches
+#' @examples
+#' h <- atctree(schema="full")
+#' nds <- look(h, "inflamm")
+#' # a search for inflammatory substances and families
+#' 
+#' # plot element nds[1] which is "A07E":
+#' cutting(h, nds[1]) |> plot()
 
 setMethod("look", "atctree", 
           function(h,txt) {
@@ -576,9 +599,10 @@ setAs("atctree", "data.frame",
 #' @title graft two trees; combine them and share the root
 #' @param h1 an atctree
 #' @param h2 an atctree
+#' @param ... more atctree objects
 #' @details
 #' at the moment the branches need to be of the same schema/have the same levels
-#'  
+#' @aliases graft
 #' @returns an object of class atctree
 #' @examples
 #' # some nodes involving inflammation from look(h, "inflamm")
