@@ -87,12 +87,12 @@ setOldClass("plot")
 #' # large network so not easy to read
 #'
 #' # take cutting above node B ; plot all its descendants:
-#' plot(cutting(h,"B"))
+#' cutting(h,"B") |> plot()
 #'
 #' # plot node B down to its grandchildren:
-#' plot(h["B",-2])
+#' h["B",-2] |> plot()
 #' # or use a circular layout
-#' plot(h["B",-2], circle=TRUE, stem_label=TRUE)
+#' h["B",-2] |> plot(circle=TRUE, stem_label=TRUE)
 #'
 setMethod("plot",
           signature=c("atctree"),
@@ -249,10 +249,10 @@ setMethod("plot",
 #' @examples
 #' h <- atctree(schema="therapeutic")
 #' # Suppose we are interested in a branch of this tree; take a cutting and plot it:
-#' plot(cutting(h, "P01"))
+#' cutting(h, "P01") |> plot()
 #'
 #' # a different look:
-#' plot(cutting(h, "P01"),  text_angle=0, circle=TRUE)
+#' cutting(h, "P01") |> plot(text_angle=0, circle=TRUE)
 #'
 
 setMethod("cutting",
@@ -325,7 +325,7 @@ setMethod("cutting",
 #' # make a subtree cut at node C
 #' plot(h1A, circle=TRUE)
 #' # suppose we decide not to display some nodes:
-#' plot(pruning(h1A, c("C01", "C05", "C10")), circle=TRUE)
+#' pruning(h1A, c("C01", "C05", "C10")) |> plot(circle=TRUE)
 #'
 
 setMethod("pruning",
