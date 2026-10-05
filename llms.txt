@@ -89,10 +89,18 @@ for the article to load.
   : cutting from an ATC tree
 - [`drugnames()`](https://jnm212.github.io/visATC/reference/drugnames.md)
   : display drug name for ATC codes
+- [`graft(`*`<atctree>`*`,`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/graft-atctree-atctree-method.md)
+  : graft two trees; combine them and share the root
 - [`treelevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`leaves(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`nlevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   : helper functions for atctrees
+- [`look(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/look-atctree-method.md)
+  : search the node texts for an expression
+- [`parents(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/parents-atctree-method.md)
+  : show the parents for the specified node(s) in the tree
+- [`parents(`*`<character>`*`)`](https://jnm212.github.io/visATC/reference/parents-character-method.md)
+  : show the parents for the specified node(s) in the full tree
 - [`parents()`](https://jnm212.github.io/visATC/reference/parents.md) :
   show the parents of the specified node(s)
 - [`plot(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/plot-atctree-method.md)
