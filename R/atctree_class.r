@@ -403,7 +403,7 @@ setMethod("[", "atctree",
                 ret <- c(ret, ff(ret))
               }
             } else {
-              ret <- which(x@lab==parents(h,i,j)) #find the ancestor
+              ret <- which(x@lab==parents(x,i,j)) #find the ancestor
               if (length(ret)==0) {print("No ancestor found"); return(NULL)}
               for (ii in -1:-j) {
                 ret <- c(ret, ff(ret))
@@ -420,7 +420,7 @@ setMethod("[", "atctree",
 #              filter(.data$ATC %in% all_nodes)
 #                if (!("ATC" %in% colnames(dataf))) {stop("no ATC codes using this filtering function")} # trap errors with filter
 
-            dataf <- as(h, "data.frame") |> 
+            dataf <- as(x, "data.frame") |> 
               filter(.data$ATC %in% all_nodes)
             
             # the highest node needs resetting so that its parent is the root node:
