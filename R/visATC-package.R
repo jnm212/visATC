@@ -26,6 +26,7 @@ ignore_unused_imports <- function() {
 #' @importFrom methods new
 #' @importFrom utils data
 #' @importFrom rlang .data
+#' @importFrom methods as
 #' 
 ## usethis namespace: end
 NULL
