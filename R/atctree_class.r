@@ -588,6 +588,11 @@ setAs("atctree", "data.frame",
 #' h1 <- cutting(h, "M01")
 #' h2 <- cutting(h, "A07")
 #' graft(h1,h2) |> plot(circle=TRUE, leaf=FALSE)
+#'
+#' h1 <- h["P01AA",2]
+#' h2 <- h["C01",-1]
+#' graft(h1, h2) |> plot(stem_label=TRUE, circle=T)
+
 
 # first deal with two trees only; later a whole list
 setMethod("graft", 
@@ -595,7 +600,7 @@ setMethod("graft",
           function(h1,h2) {
             
             if (identical(h1@whichlevs,h2@whichlevs)==FALSE) stop("trees must have same levels when grafting")
-            if (identical(h1@schema,h2@schema)==FALSE) stop("trees must have same schema")
+            if (identical(h1@schema,h2@schema)==FALSE) stop("trees must have same schema when grafting")
             
             dataf <- bind_rows(
               as(h1, "data.frame"),
