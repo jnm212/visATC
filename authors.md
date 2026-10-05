@@ -7,13 +7,13 @@
 ## Citation
 
 Matthews J (2026). *visATC: Visualise the Anatomical Therapeutic
-Chemical (ATC) Hierarchy*. R package version 1.0.0,
+Chemical (ATC) Hierarchy*. R package version 1.0.0.9000,
 <https://jnm212.github.io/visATC/>.
 
     @Manual{,
       title = {visATC: Visualise the Anatomical Therapeutic Chemical (ATC) Hierarchy},
       author = {J Matthews},
       year = {2026},
-      note = {R package version 1.0.0},
+      note = {R package version 1.0.0.9000},
       url = {https://jnm212.github.io/visATC/},
     }

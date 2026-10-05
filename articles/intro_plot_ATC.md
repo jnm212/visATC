@@ -109,7 +109,8 @@ examine the drugs *within* a single anatomical group:
 ``` r
 
 h <- atctree(schema="anatomical")
-plot(cutting(h,"D"), circle=T)
+cutting(h,"D") |> 
+  plot(circle=TRUE)
 #> Remember you can hover over nodes to see text
 ```
 
@@ -120,7 +121,8 @@ the nodes within the functional group P01 (antiprotozoals):
 
 h <- atctree(schema="therapeutic")
 # annotations on this tree are too cluttered, so take a cutting
-plot(cutting(h, "P01"), width=1000)
+cutting(h, "P01") |> 
+  plot(width=1000)
 #> Remember you can hover over nodes to see text
 ```
 
@@ -131,14 +133,16 @@ and now a chemical group:
 h <- atctree(schema="chemical")
 # annotations on this tree are too cluttered, so take a cutting.
 # here there's enough space not to surpress the leaf labelling:
-plot(cutting(h, "J01DD"), leaf_label=T, text_size=5)
+cutting(h, "J01DD") |>
+  plot(leaf_label=TRUE, text_size=5)
 #> Remember you can hover over nodes to see text
 ```
 
 ``` r
 
 # try plotting on a circle:
-plot(cutting(h, "J01DD"), leaf_label=T, circle=T, text_angle=0, text_size=5)
+cutting(h, "J01DD") |>
+  plot(leaf_label=T, circle=T, text_angle=0, text_size=5)
 #> Remember you can hover over nodes to see text
 ```
 
@@ -150,7 +154,7 @@ decisions about the plotting arguments. For example:
 
 
 h <- atctree(whichlevs=c(1,2,4))
-plot(h, leaf_label=F)
+plot(h, leaf_label=FALSE)
 #> Remember you can hover over nodes to see text
 ```
 
@@ -161,3 +165,16 @@ Another way to go about producing plots, less intuitive but with more
 control, is using subsetting with the `[` operator - see `subset`. This
 is most likely to be useful with a full ATC tree, since other schema
 (anatomical, therapeutic, chemical) have few generations to choose from.
+
+You can put multiple trees on the same graph if they contain the same
+levels. First you need to join them together using `graft`.
+
+``` r
+
+h <- atctree(schema="full")
+h1 <- cutting(h, "P01C")
+h2 <- cutting(h, "H01A")
+graft(h1,h2) |>
+  plot(circle=TRUE, leaf=FALSE)
+#> Remember you can hover over nodes to see text
+```
