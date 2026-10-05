@@ -1,7 +1,8 @@
 #' @keywords internal
 "_PACKAGE"
 
-utils::globalVariables("ATCdata")
+utils::globalVariables(names=c("ATCdata","levindx","plevindx","pnode","pATC","plen","plev"))
+# stop some R CMD notes
 
 # to eliminate check NOTE
 # see R packages 11.4.1.1
