@@ -25,6 +25,6 @@ h1A <- cutting(h1, "C")
 # make a subtree cut at node C
 plot(h1A, circle=TRUE)
 # suppose we decide not to display some nodes:
-plot(pruning(h1A, c("C01", "C05", "C10")), circle=TRUE)
+pruning(h1A, c("C01", "C05", "C10")) |> plot(circle=TRUE)
 
 }

@@ -23,9 +23,9 @@ Cut out a branch with just the descendants of the specified node.
 \examples{
 h <- atctree(schema="therapeutic")
 # Suppose we are interested in a branch of this tree; take a cutting and plot it:
-plot(cutting(h, "P01"))
+cutting(h, "P01") |> plot()
 
 # a different look:
-plot(cutting(h, "P01"),  text_angle=0, circle=TRUE)
+cutting(h, "P01") |> plot(text_angle=0, circle=TRUE)
 
 }

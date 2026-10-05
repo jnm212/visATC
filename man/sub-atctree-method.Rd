@@ -5,7 +5,7 @@
 \alias{subset}
 \title{find a subset of the tree}
 \usage{
-\S4method{[}{atctree}(x, i, j = 0)
+\S4method{[}{atctree}(x, i, j = 1L)
 }
 \arguments{
 \item{x}{object of class atctree}
@@ -28,11 +28,12 @@ The generation is specified by integer j, signed positive for ancestors and nega
 \examples{
 h <- atctree(schema="full")
 #more useful to use the full tree with this approach
-# plot the siblings of C01:
-plot(h["C01",0], ATC_text=TRUE, stem_label=TRUE, leaf_label=TRUE)
 # plot descendents of P01 (as far as grandchildren):
-plot(h["P01",-2], stem_label=TRUE, leaf_label=TRUE)
+h["P01",-2] |> plot(stem_label=TRUE, leaf_label=TRUE)
 # plot descendents of P01 (as far as great grandchildren):
-plot(h["P01",-3], stem_label=TRUE, leaf_label=TRUE)
-
+h["P01",-3] |> plot(stem_label=TRUE, leaf_label=FALSE)
+# plot descendents of parent of P01A:
+h["P01A",1] |> plot(stem_label=TRUE, leaf_label=TRUE)
+# plot descendents of grandparent of P01A:
+h["P01A",2] |> plot(stem_label=TRUE, leaf_label=TRUE)
 }

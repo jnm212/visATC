@@ -58,14 +58,11 @@ h <- atctree(schema="full")
 # large network so not easy to read
 
 # take cutting above node B ; plot all its descendants:
-plot(cutting(h,"B"))
-
-# plot siblings of node A03
-plot(h["A03",0])
+cutting(h,"B") |> plot()
 
 # plot node B down to its grandchildren:
-plot(h["B",-2])
+h["B",-2] |> plot()
 # or use a circular layout
-plot(h["B",-2], circle=TRUE, stem_label=TRUE)
+h["B",-2] |> plot(circle=TRUE, stem_label=TRUE)
 
 }
