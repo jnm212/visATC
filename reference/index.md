@@ -24,8 +24,6 @@
   : show the parents for the specified node(s) in the tree
 - [`parents(`*`<character>`*`)`](https://jnm212.github.io/visATC/reference/parents-character-method.md)
   : show the parents for the specified node(s) in the full tree
-- [`parents()`](https://jnm212.github.io/visATC/reference/parents.md) :
-  show the parents of the specified node(s)
 - [`plot(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/plot-atctree-method.md)
   : plot the tree as a network graph
 - [`pruning(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/pruning-atctree-method.md)
