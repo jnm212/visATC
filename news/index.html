@@ -36,10 +36,27 @@
     </div>
 
     <div class="section level2">
+<h2 class="pkg-version" data-toc-text="development version" id="visatc-development-version">visATC (development version)<a class="anchor" aria-label="anchor" href="#visatc-development-version"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
+<ul><li><p>graft() function will join multiple atctree objects together (internally this required structural alterations so that every atctree contains the root node)</p></li>
+<li><p>subsetting ([) method now shows descendents of ancestor when j&gt;0, and does nothing when j=0. (Previously it showed the direct lineage only, which wasn’t very informative).</p></li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-and-bug-fixes-development-version">Minor changes and bug fixes<a class="anchor" aria-label="anchor" href="#minor-changes-and-bug-fixes-development-version"></a></h3>
+<ul><li><p>more examples, and all rewritten with pipe operator for clarity</p></li>
+<li><p>fixed error in return from cutting() method</p></li>
+<li><p>used internally: new helper atctree methods intree() and parents(), coercion of atctree to data.frame</p></li>
+<li><p>look() atctree method finds nodes with a search term</p></li>
+<li><p>show() method displays root node as well</p></li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="visatc-100">visATC 1.0.0<a class="anchor" aria-label="anchor" href="#visatc-100"></a></h2><p class="text-muted">CRAN release: 2026-09-23</p>
 <ul><li>Initial CRAN submission.</li>
 </ul></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
