@@ -596,12 +596,13 @@ setAs("atctree", "data.frame",
 
 
 #' @export
-#' @title graft two trees; combine them and share the root
+#' @title graft (combine) trees
 #' @param h1 an atctree
 #' @param h2 an atctree
 #' @param ... more atctree objects
 #' @details
-#' at the moment the branches need to be of the same schema/have the same levels
+#' Trees are grafted together at the root so they can be displayed on the same figure
+#' At the moment the branches need to be of the same schema/have the same levels
 #' @aliases graft
 #' @returns an object of class atctree
 #' @examples
@@ -616,7 +617,6 @@ setAs("atctree", "data.frame",
 #' h3 <- cutting(h, "G01A") #descendents of G01A
 #' graft(h1, h2, h3) |> plot(stem_label=TRUE)
 
-# first deal with two trees only; later a whole list
 setMethod("graft", 
           c("atctree","atctree"), #at least two nodes
           function(h1,h2,...) {
@@ -630,7 +630,7 @@ setMethod("graft",
               purrr::list_rbind() |>
               dplyr::distinct()
 
-# previous code for h1,h2 only:
+# previous code for two trees h1,h2 only:
 #            dataf <- bind_rows(
 #              as(h1, "data.frame"),
 #              as(h2, "data.frame")
