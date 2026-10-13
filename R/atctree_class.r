@@ -147,15 +147,15 @@ setMethod("plot",
             #create adjacency matrix
             
             G <- igraph::graph.adjacency(A)
-            
+#browser()            
             if (circle) {
               #            L <- igraph::layout_as_tree(G,circular=TRUE)
-              L <- graphlayouts::layout_with_centrality(G, cent=5-x@lev)
+              L <- graphlayouts::layout_with_centrality(G, cent=c(8.2,8,6,5,3,1)[x@lev+1])
               Xn <- L[,1]
               Yn <- L[,2]
               
             } else {
-              L <- igraph::layout_with_sugiyama(G, layers=x@lev)
+              L <- igraph::layout_with_sugiyama(G, layers=c(1,2,5,7,8,9)[x@lev+1])
               Xn <- L$layout[,1]
               Yn <- L$layout[,2]
             }
