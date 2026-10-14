@@ -57,11 +57,21 @@ atctree <-   function(
 #  whichlevs <- setdiff(unique(dataf$lev),0)
   whichlevs <- whichlevs[order(whichlevs)]
 
+  # arrange common drug names into a comma-seperated string and add to the data frame:
+  mednames <- mednames |> 
+    split(mednames$ATC) |>
+    purrr::map(.f=function(x) {data.frame(ATC=x$ATC, name=paste(x$name, collapse=", "))}) |>
+    dplyr::bind_rows() |>
+    dplyr::distinct()
+  dataf <- left_join(dataf, mednames, by="ATC")
+  
+  
   .Object <- methods::new("atctree",
                  pnode = dataf$pnode,
                  node = dataf$node,
                  lab = dataf$ATC,
                  text = dataf$text,
+                 drugnames=dataf$name,
                  plab = dataf$pATC,
                  lev = dataf$lev,
                  Nnode = length(dataf$node)-1,

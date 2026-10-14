@@ -14,6 +14,7 @@ setGeneric("graft",  function(h1,h2, ...){print(NULL)})
 #' @slot lab ATC code
 #' @slot plab parent ATC code
 #' @slot text ATC textual info
+#' @slot drugnames common names for drugs where known
 #' @slot lev level of each node (root node is 0)
 #' @slot schema one of 'none', 'full', 'anatomical', 'therapeutic', 'chemical'
 #' @slot whichlevs subset of integers 1:5; should correspond to schema
@@ -24,6 +25,7 @@ setClass("atctree",
                          pnode="numeric",
                          lab="character",
                          text="character",
+                         drugnames="character",
                          plab="character",
                          lev="numeric",
                          whichlevs="numeric",
@@ -68,6 +70,7 @@ setOldClass("plot")
 #' @param ATC_text whether or not to label with ATC textual info 
 #' @param leaf_label whether or not leaf nodes will be labelled 
 #' @param stem_label whether or not stem nodes will be labelled 
+#' @param include_names whether or not to include common names in text
 #' @param text_size annotation text size 
 #' @param text_angle annotation text angle 
 #' @param width graph width
@@ -99,6 +102,7 @@ setMethod("plot",
           
           function(x, circle=NULL, ATC_text=NULL,
                    leaf_label=NULL, stem_label=NULL,
+                   include_names=F,
                    text_size=10, text_angle=45,
                    width=500, height=500, hover_msg=TRUE) {
             
@@ -129,7 +133,7 @@ setMethod("plot",
             } else {
               labvec <- x@text
             }
-            
+          
             if (leaf_label==FALSE) {
               labvec[x@lev==max(unique(x@lev))] <- ""
             }
@@ -182,13 +186,20 @@ setMethod("plot",
               edge_shapes[[i]] <- edge_shape
             }
             
-            
+    
             network <- plotly::plot_ly(x = ~Xn, y = ~Yn,
                                        width = width,
                                        height = height,
                                        type="scatter",
                                        mode = "markers+text",
-                                       hovertext = paste(x@lab,x@text,sep=":"),
+                                       hovertext = if (include_names==FALSE) {
+                                                          paste(x@lab, x@text, sep=":")
+                                                   } else {
+                                                          paste0(x@lab, ": ", x@text, 
+                                                                 if_else(is.na(x@drugnames), "", paste0(" [",x@drugnames,"]"))
+                                                                 )
+                                                   },
+                                       
                                        hoverinfo = "text"
             )
             
@@ -287,6 +298,7 @@ setMethod("cutting",
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
+                      drugnames = dataf$drugnames,
                       lab = dataf$ATC,
                       text = dataf$text,
                       plab = dataf$pATC,
@@ -346,6 +358,7 @@ setMethod("pruning",
             h@lab <- h@lab[-remove_nodes]
             h@pnode <- h@pnode[-remove_nodes]
             h@text <- h@text[-remove_nodes]
+            h@drugnames <- h@drugnames[-remove_nodes]
             h@node <- h@node[-remove_nodes]
             h@lev <- h@lev[-remove_nodes]
             h@plab <- h@plab[-remove_nodes]
@@ -435,6 +448,7 @@ setMethod("[", "atctree",
             h2 <- new("atctree",
                       pnode = dataf$pnode,
                       node = dataf$node,
+                      drugnames = dataf$drugnames,
                       lab = dataf$ATC,
                       text = dataf$text,
                       plab = dataf$pATC,
@@ -570,6 +584,7 @@ setAs("atctree", "data.frame",
         
         df <- data.frame(ATC=from@lab, 
                          text=from@text, 
+                         drugnames=from@drugnames,
                          len=nchar(from@lab), 
                          node=from@node, 
                          lev=from@lev, 
@@ -642,6 +657,7 @@ setMethod("graft",
                      node = dataf$node,
                      lab = dataf$ATC,
                      text = dataf$text,
+                     drugnames = dataf$drugnames,
                      plab = dataf$pATC,
                      lev = dataf$lev,
                      Nnode = length(dataf$node)-1,
