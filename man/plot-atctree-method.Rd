@@ -11,6 +11,7 @@
   ATC_text = NULL,
   leaf_label = NULL,
   stem_label = NULL,
+  include_names = F,
   text_size = 10,
   text_angle = 45,
   width = 500,
@@ -28,6 +29,8 @@
 \item{leaf_label}{whether or not leaf nodes will be labelled}
 
 \item{stem_label}{whether or not stem nodes will be labelled}
+
+\item{include_names}{whether or not to include common names in text}
 
 \item{text_size}{annotation text size}
 

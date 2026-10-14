@@ -20,6 +20,8 @@ class to represent a tree from the ATC  hierarchy
 
 \item{\code{text}}{ATC textual info}
 
+\item{\code{drugnames}}{common names for drugs where known}
+
 \item{\code{lev}}{level of each node (root node is 0)}
 
 \item{\code{schema}}{one of 'none', 'full', 'anatomical', 'therapeutic', 'chemical'}

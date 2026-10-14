@@ -3,7 +3,7 @@
 \name{graft,atctree,atctree-method}
 \alias{graft,atctree,atctree-method}
 \alias{graft}
-\title{graft two trees; combine them and share the root}
+\title{graft (combine) trees}
 \usage{
 \S4method{graft}{atctree,atctree}(h1, h2, ...)
 }
@@ -18,10 +18,11 @@
 an object of class atctree
 }
 \description{
-graft two trees; combine them and share the root
+graft (combine) trees
 }
 \details{
-at the moment the branches need to be of the same schema/have the same levels
+Trees are grafted together at the root so they can be displayed on the same figure
+At the moment the branches need to be of the same schema/have the same levels
 }
 \examples{
 # some nodes involving inflammation from look(h, "inflamm")
