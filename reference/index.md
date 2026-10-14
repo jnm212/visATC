@@ -13,7 +13,7 @@
 - [`drugnames()`](https://jnm212.github.io/visATC/reference/drugnames.md)
   : display drug name for ATC codes
 - [`graft(`*`<atctree>`*`,`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/graft-atctree-atctree-method.md)
-  : graft two trees; combine them and share the root
+  : graft (combine) trees
 - [`treelevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`leaves(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`nlevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)

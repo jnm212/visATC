@@ -40,13 +40,15 @@
 <div class="section level3">
 <h3 id="major-changes-development-version">Major changes<a class="anchor" aria-label="anchor" href="#major-changes-development-version"></a></h3>
 <ul><li><p>graft() function will join multiple atctree objects together (internally this required structural alterations so that every atctree contains the root node)</p></li>
-<li><p>subsetting ([) method now shows descendents of ancestor when j&gt;0, and does nothing when j=0. (Previously it showed the direct lineage only, which wasn’t very informative).</p></li>
+<li><p>subsetting ([) method now shows descendents of ancestor when j&gt;0, and does nothing when j=0. (Previously it showed the direct lineage only when j&gt;0, which wasn’t very informative).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-and-bug-fixes-development-version">Minor changes and bug fixes<a class="anchor" aria-label="anchor" href="#minor-changes-and-bug-fixes-development-version"></a></h3>
 <ul><li><p>more examples, and all rewritten with pipe operator for clarity</p></li>
 <li><p>fixed error in return from cutting() method</p></li>
 <li><p>used internally: new helper atctree methods intree() and parents(), coercion of atctree to data.frame</p></li>
+<li><p>minor alteration to layout of levels in plots</p></li>
+<li><p>new slot drugnames for atctree class</p></li>
 <li><p>look() atctree method finds nodes with a search term</p></li>
 <li><p>show() method displays root node as well</p></li>
 </ul></div>

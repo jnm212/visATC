@@ -24,6 +24,10 @@ class to represent a tree from the ATC hierarchy
 
   ATC textual info
 
+- `drugnames`:
+
+  common names for drugs where known
+
 - `lev`:
 
   level of each node (root node is 0)

@@ -10,7 +10,7 @@
 
 - subsetting (\[) method now shows descendents of ancestor when j\>0,
   and does nothing when j=0. (Previously it showed the direct lineage
-  only, which wasn’t very informative).
+  only when j\>0, which wasn’t very informative).
 
 ### Minor changes and bug fixes
 
@@ -20,6 +20,10 @@
 
 - used internally: new helper atctree methods intree() and parents(),
   coercion of atctree to data.frame
+
+- minor alteration to layout of levels in plots
+
+- new slot drugnames for atctree class
 
 - look() atctree method finds nodes with a search term
 
