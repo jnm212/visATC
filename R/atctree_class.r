@@ -529,19 +529,34 @@ setMethod("parents", "character",
 #' @param node a node e.g. A01AX
 #' @param anc level of ancestry (default 1). How many generations back or forward?
 #' @aliases parents
-#' @returns atctree object
+#' @returns atctree object, or NA if there is no such ancestor
+#' @examples
 #' 
+#' # show the parents and then grandparents of node A01AA01 in a full tree
+#' h <- atctree(schema="full")
+#' parents(h,"A01AA01",anc=1)
+#' parents(h,"A01AA01",anc=2)
+#'
+#' # for an anatomical tree the levels are (1,5) so the parent is just A:
+#' h2 <- atctree(schema="anatomical")
+#' parents(h2, "A01AA01")
+#' 
+#' # no grandparent:
+#' parents(h2, "A01AA01",2)
+
+
 setMethod("parents", "atctree", 
           function(h, node, anc=1) {
             # anc indicates which ancestor; 1 (default) is parent, 2 is grandparent etc
-            
+
             if (anc<1) stop("anc argument must be >=1")
+            if (intree(h,node)==FALSE) stop("Specified node not in this tree")
             if (!is.integer(anc)) anc <- as.integer(anc)
             
             levlen <- c(1,3,4,5,7)[h@whichlevs] # lengths of labels in each level
             
             nodelev <- which(levlen==nchar(node)) # level of active node
-            
+
             if (anc>=nodelev) {
               ret <- NA
             } else {
