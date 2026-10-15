@@ -15,8 +15,22 @@
 \item{anc}{level of ancestry (default 1). How many generations back or forward?}
 }
 \value{
-atctree object
+atctree object, or NA if there is no such ancestor
 }
 \description{
 show the parents for the specified node(s) in the tree
+}
+\examples{
+
+# show the parents and then grandparents of node A01AA01 in a full tree
+h <- atctree(schema="full")
+parents(h,"A01AA01",anc=1)
+parents(h,"A01AA01",anc=2)
+
+# for an anatomical tree the levels are (1,5) so the parent is just A:
+h2 <- atctree(schema="anatomical")
+parents(h2, "A01AA01")
+
+# no grandparent:
+parents(h2, "A01AA01",2)
 }
