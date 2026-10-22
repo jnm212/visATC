@@ -7,6 +7,8 @@
 \alias{leaves}
 \alias{nlevs,atctree-method}
 \alias{nlevs}
+\alias{intree,atctree-method}
+\alias{intree}
 \title{helper functions for atctrees}
 \usage{
 \S4method{treelevs}{atctree}(h)
@@ -14,9 +16,13 @@
 \S4method{leaves}{atctree}(h)
 
 \S4method{nlevs}{atctree}(h)
+
+\S4method{intree}{atctree}(h, node)
 }
 \arguments{
 \item{h}{an object of class atctree}
+
+\item{node}{name of a node e.g. A01}
 }
 \value{
 a vector of the level of each node
@@ -24,6 +30,8 @@ a vector of the level of each node
 vector of labels of the leaf nodes
 
 vector of number of levels in the tree
+
+logical value
 }
 \description{
 treelevs: return levels within tree (excluding 0)
@@ -31,4 +39,24 @@ treelevs: return levels within tree (excluding 0)
 leaves: return labels of terminal elements (leaves) of tree
 
 nlevs: number of levels in tree (excluding 0)
+
+check whether a node is in a tree
+}
+\examples{
+h <- atctree(schema="therapeutic")
+# get the levels of the nodes in a tree:
+cutting(h,"P01A") |> treelevs()
+
+h <- atctree(schema="full")
+# get the leaf nodes for the tree:
+cutting(h,"P01A") |> leaves()
+
+h <- atctree(schema="anatomical")
+nlevs(h)
+
+h2 <- atctree(whichlevs=c(1,2,5))
+nlevs(h2)
+h <- atctree(schema="chemical")
+intree(h, "A01")
+intree(h, "A01AA")
 }

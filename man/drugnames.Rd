@@ -15,3 +15,8 @@ character vector of drug names
 \description{
 display drug name for ATC codes
 }
+\examples{
+# example code
+drugnames(c("P01AA", "P01A"))
+
+}
