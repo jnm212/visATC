@@ -17,6 +17,7 @@
 - [`treelevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`leaves(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   [`nlevs(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
+  [`intree(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/helpers.md)
   : helper functions for atctrees
 - [`look(`*`<atctree>`*`)`](https://jnm212.github.io/visATC/reference/look-atctree-method.md)
   : search the node texts for an expression

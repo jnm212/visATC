@@ -17,3 +17,14 @@ drugnames(x)
 ## Value
 
 character vector of drug names
+
+## Examples
+
+``` r
+# example code
+drugnames(c("P01AA", "P01A"))
+#>                                                    P01AA 
+#>                           "Hydroxyquinoline derivatives" 
+#>                                                     P01A 
+#> "AGENTS AGAINST AMOEBIASIS AND OTHER PROTOZOAL DISEASES" 
+```
