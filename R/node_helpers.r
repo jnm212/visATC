@@ -25,6 +25,10 @@ schema <- function(levs) {
 #' @title display drug name for ATC codes
 #' @param x vector of ATC codes
 #' @returns character vector of drug names
+#' @examples
+#' # example code
+#' drugnames(c("P01AA", "P01A"))
+#' 
 drugnames <- function(x) {
   sapply(x, function(codes) {names(grep(paste0("^",codes,"$"), ATCdata, value=T))})
 }
