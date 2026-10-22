@@ -580,8 +580,8 @@ setMethod("parents", "atctree",
 #' nds <- look(h, "inflamm")
 #' # a search for inflammatory substances and families
 #' 
-#' # plot element nds[1] which is "A07E":
-#' cutting(h, nds[1]) |> plot()
+#' # plot second element of nds (M01AX):
+#' cutting(h, nds[2]) |> plot(circle=TRUE)
 
 setMethod("look", "atctree", 
           function(h,txt) {

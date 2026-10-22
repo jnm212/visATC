@@ -72,11 +72,12 @@ setMethod("nlevs", "atctree",
 
 
 #' @export
-#' @description nlevs: number of levels in tree (excluding 0)
+#' @description check whether a node is in a tree
 #' @param h an object of class atctree
+#' @param node name of a node e.g. A01
 #' @rdname helpers
-#' @aliases nlevs
-#' @returns vector of number of levels in the tree
+#' @aliases intree
+#' @returns logical value
 #' @examples
 #' h <- atctree(schema="chemical")
 #' intree(h, "A01")
